@@ -60,6 +60,20 @@ export default function TabLayout() {
           title: 'Profile',
           tabBarIcon: ({ color }) => <IconSymbol size={28} name="person.fill" color={color} />,
         }}
+      /> 
+        <Tabs.Screen
+        name="log in"
+        options={{
+          title: 'Log In or Sign Up',
+          tabBarIcon: ({ color }) => <IconSymbol size={28} name="person.fill" color={color} />,
+        }}
+      />  
+      <Tabs.Screen
+        name="sign create account"
+        options={{
+          title: 'Create Account',
+          tabBarIcon: ({ color }) => <IconSymbol size={28} name="person.fill" color={color} />,
+        }}
       />  
     </Tabs>
   );
