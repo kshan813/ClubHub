@@ -1,4 +1,5 @@
-import type { PropsWithChildren, ReactElement } from 'react';
+import type { PropsWithChildren } from 'react';
+import { Calendar } from 'react-native-calendars';
 import { StyleSheet } from 'react-native';
 import Animated, {
   interpolate,
@@ -14,19 +15,18 @@ import { useColorScheme } from '@/hooks/useColorScheme';
 const HEADER_HEIGHT = 250;
 
 type Props = PropsWithChildren<{
-  headerImage: ReactElement;
   headerBackgroundColor: { dark: string; light: string };
 }>;
 
 export default function ParallaxScrollView({
   children,
-  headerImage,
   headerBackgroundColor,
 }: Props) {
   const colorScheme = useColorScheme() ?? 'light';
   const scrollRef = useAnimatedRef<Animated.ScrollView>();
   const scrollOffset = useScrollViewOffset(scrollRef);
   const bottom = useBottomTabOverflow();
+
   const headerAnimatedStyle = useAnimatedStyle(() => {
     return {
       transform: [
@@ -51,15 +51,33 @@ export default function ParallaxScrollView({
         scrollEventThrottle={16}
         scrollIndicatorInsets={{ bottom }}
         contentContainerStyle={{ paddingBottom: bottom }}>
+
+        {/* Animated Header */}
         <Animated.View
           style={[
             styles.header,
             { backgroundColor: headerBackgroundColor[colorScheme] },
             headerAnimatedStyle,
-          ]}>
-          {headerImage}
-        </Animated.View>
-        <ThemedView style={styles.content}>{children}</ThemedView>
+          ]}
+        />
+
+        {/* Content */}
+        <ThemedView style={styles.content}>
+          <Calendar
+            style={styles.calendar}
+            theme={{
+              backgroundColor: 'transparent',
+              calendarBackground: 'transparent',
+              selectedDayBackgroundColor: '#00adf5',
+              todayTextColor: '#00adf5',
+              arrowColor: '#00adf5',
+              monthTextColor: colorScheme === 'dark' ? '#fff' : '#000',
+              textSectionTitleColor: colorScheme === 'dark' ? '#ccc' : '#555',
+            }}
+          />
+
+          {children}
+        </ThemedView>
       </Animated.ScrollView>
     </ThemedView>
   );
@@ -78,5 +96,10 @@ const styles = StyleSheet.create({
     padding: 32,
     gap: 16,
     overflow: 'hidden',
+  },
+  calendar: {
+    borderRadius: 10,
+    padding: 10,
+    backgroundColor: 'rgba(255, 255, 255, 0.05)', // optional: adjust for theme
   },
 });

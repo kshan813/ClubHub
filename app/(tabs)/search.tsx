@@ -16,10 +16,6 @@ export default function TabThreeScreen() {
   const TechButtons = ['ACM-W', 'UPE', 'Dev X', 'LAHacks', 'Bruin AI'];
   const AthleticsButtons = ['Bruin Run', 'Women\'s Club Soccer', 'Mens\'s Club Lacrosse', 'Women\'s Club Waterpolo', 'Olympic Weightlifting'];
 
-
-
-
-
   return (
      <View style={{ flex: 1, paddingTop: '15%', backgroundColor: '#CADCE8'}}>
        <Searchbar style={{ width: '90%', alignSelf: 'center', backgroundColor: '#FDFDFD'}}

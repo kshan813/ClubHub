@@ -39,14 +39,19 @@ const HorizontalButtonList: React.FC<HorizontalButtonListProps> = ({ sectionTitl
 const styles = StyleSheet.create({
   button: {
     paddingVertical: 5,
-    paddingHorizontal: 8,
+    paddingHorizontal: 2,
     height: 129,
     width: 168,
-    marginRight: 10,
-    borderRadius: 5,
+    marginRight: 8,
+    borderRadius: 15,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#FDFDFD'
+    backgroundColor: '#FDFDFD',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+    elevation: 2,
   },
   buttonText: {
     color: '#1E1E1E',
