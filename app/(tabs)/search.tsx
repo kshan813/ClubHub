@@ -139,6 +139,7 @@ export default function TabThreeScreen() {
                       alignItems: "center",
                     },
                   ]}
+                  key={index}
                   onPress={() => removeTag(word)}
                 >
                   <Text key={index}>{word} </Text>
