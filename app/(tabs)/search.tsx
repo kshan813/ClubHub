@@ -1,4 +1,3 @@
-import { Layout } from "@react-navigation/bottom-tabs/lib/typescript/commonjs/src/types";
 import React from "react";
 import { StyleSheet, TouchableOpacity } from "react-native";
 import { useState, useEffect } from "react";
