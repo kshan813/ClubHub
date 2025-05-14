@@ -25,7 +25,6 @@ const TabFiveScreen = () => {
         {...profile}
         isPublic={isPublic}
         onToggle={() => setIsPublic(prev => !prev)}
-        onEdit={() => console.log('Edit Profile Pressed')}
       />
     </View>
   );

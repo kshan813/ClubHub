@@ -1,14 +1,47 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image } from 'react-native';
+import { signInWithEmailAndPassword } from 'firebase/auth'; // ✅ Works with Expo
+import { auth } from '@/firebaseConfig'; // ✅ Adjust if needed
 
 export default function TabFiveScreen() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [status, setStatus] = useState('');
+  
+  const handleSignIn = async () => {
+    console.log('🔁 Attempting sign in...');
+    if (!email || !password) {
+      setStatus('❌ Email and password required');
+      return;
+    }
+  
+    try {
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
+      console.log('✅ Sign in successful for:', user.email);
+      setStatus('✅ Login successful!');
+    } catch (error: any) {
+      console.error('❌ Sign in error:', error.code, error.message);
+  
+      if (error.code === 'auth/network-request-failed') {
+        setStatus('🛜 Network error: Check internet connection or switch Wi-Fi.');
+      } else if (error.code === 'auth/user-not-found') {
+        setStatus('👤 No user found with this email.');
+      } else if (error.code === 'auth/wrong-password') {
+        setStatus('🔐 Incorrect password.');
+      } else if (error.code === 'auth/invalid-email') {
+        setStatus('✉️ Invalid email format.');
+      } else {
+        setStatus(`❌ ${error.message}`);
+      }
+    }
+  };
+
 
   return (
     <View style={styles.container}>
       <Image
-        source={require('../../assets/images/bear.png')} // update path if needed
+        source={require('../../assets/images/bear.png')}
         style={styles.bear}
       />
       <Text style={styles.title}>Sign In</Text>
@@ -32,9 +65,13 @@ export default function TabFiveScreen() {
         secureTextEntry
       />
 
-      <TouchableOpacity style={styles.button}>
+      <TouchableOpacity style={styles.button} onPress={handleSignIn}>
         <Text style={styles.buttonText}>Sign In</Text>
       </TouchableOpacity>
+
+      <Text style={{ marginTop: 16, color: '#333', textAlign: 'center' }}>
+        {status}
+      </Text>
 
       <TouchableOpacity style={styles.linkContainer}>
         <Text style={styles.linkText}>
@@ -99,10 +136,11 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     textDecorationLine: 'underline',
   },
-
   underlinedText: {
     fontSize: 20,
     textDecorationLine: 'underline',
     marginBottom: 10,
-    },
+  },
 });
+
+

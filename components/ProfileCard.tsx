@@ -14,12 +14,11 @@ type ProfileProps = {
   interests: { label: string; color: string }[];
   isPublic: boolean;
   onToggle: () => void;
-  onEdit: () => void;
 };
 
 const ProfileCard: React.FC<ProfileProps> = ({
   name, email, major, grade, pronouns, image, interests,
-  isPublic, onToggle, onEdit
+  isPublic, onToggle
 }) => {
   return (
     <View style={styles.container}>
@@ -36,11 +35,6 @@ const ProfileCard: React.FC<ProfileProps> = ({
 
       <Text style={styles.title}>Profile</Text>
       <Image source={image} style={styles.photoCircle} />
-
-      <TouchableOpacity style={styles.iconButton} onPress={onEdit}>
-        <MaterialIcons name="edit" size={28} color="#7393b3" />
-        <Text style={styles.iconLabel}>Edit Profile</Text>
-      </TouchableOpacity>
 
       <View style={styles.contentWrapper}>
         <InfoSection label="Name" value={name} />
